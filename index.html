@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" href="normalize.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="images/favicon.png" type="image/x-icon" />
+    <title>Viajes Diarios</title>
+  </head>
+  <body>
+    <main>
+      <h1>Control de Viajes</h1>
+
+      <p class="total-label">
+        $ <span id="trips-total" data-last-value="">0</span>
+      </p>
+      <div class="trips-buttons-container">
+        <button class="trip-button" id="trip-cost-btn" value="10">$10</button>
+        <button class="trip-button" id="trip-cost-btn" value="15">$15</button>
+        <button class="trip-button" id="trip-cost-btn" value="20">$20</button>
+        <button class="trip-button" id="trip-cost-btn" value="0">Otro</button>
+        <button class="reverse-button" id="reverse-button">↩</button>
+        <button class="test-json" id="test-json">Test</button>
+        <!-- test -->
+      </div>
+      <div class="diferent-trip-container">
+        <form action="./" method="get" class="diferent-trip-form">
+          <input type="number" placeholder="$--" />
+          <input type="submit" value="Aceptar" />
+        </form>
+      </div>
+    </main>
+    <script src="script.js" type="module"></script>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "viajes": [
+    {
+      "coordenadaInicial": "0000",
+      "coordenadaFinal": "0001",
+      "costo": "$10",
+      "horaInicio": "15:00",
+      "horaFinal": "15:15",
+      "idUser": "001",
+      "fecha": "08/07/2025",
+      "turno": "tarde"
+    },
+    {
+      "coordenadaInicial": "0000",
+      "coordenadaFinal": "0001",
+      "costo": "$10",
+      "horaInicio": "15:00",
+      "horaFinal": "15:15",
+      "idUser": "001",
+      "fecha": "08/07/2025",
+      "turno": "tarde"
+    }
+  ]
+}

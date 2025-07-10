@@ -1,0 +1,22 @@
+{
+  "name": "Viajes Diarios",
+  "orientation": "landscape",
+  "display": "standalone",
+  "start_url": "./?utm_source=web_app_manifest",
+  "scope": "./",
+  "theme_color": "#F0DB4F",
+  "background_color": "#541F14",
+  "lang": "es-MX",
+  "icons": [
+    {
+      "src": "./icons/small.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "./icons/regular.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
