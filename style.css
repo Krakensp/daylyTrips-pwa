@@ -76,9 +76,12 @@ main {
 }
 
 .diferent-trip-container {
+  position: absolute;
+  top: 0;
+  right: -100%;
   padding: 0.5rem;
 
-  opacity: 0.6;
+  opacity: 0;
   top: 0;
   width: 100%;
   height: 100dvh;
@@ -109,4 +112,9 @@ main {
 .diferent-trip-form input[type="number"] {
   background-color: rgb(26, 26, 27);
   color: aliceblue;
+}
+
+.active {
+  left: 0;
+  opacity: 1;
 }

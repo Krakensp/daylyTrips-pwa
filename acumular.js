@@ -17,6 +17,8 @@ const revertir = (totalLabel) => {
   let costValue = 0;
 
   modificar(costValue, newValue, totalLabel);
+
+  return lastValue;
 };
 
 const modificar = (costValue, newValue, totalLabel) => {

@@ -17,18 +17,19 @@
         $ <span id="trips-total" data-last-value="">0</span>
       </p>
       <div class="trips-buttons-container">
-        <button class="trip-button" id="trip-cost-btn" value="10">$10</button>
-        <button class="trip-button" id="trip-cost-btn" value="15">$15</button>
-        <button class="trip-button" id="trip-cost-btn" value="20">$20</button>
-        <button class="trip-button" id="trip-cost-btn" value="0">Otro</button>
+        <button class="trip-button" value="10">$10</button>
+        <button class="trip-button" value="15">$15</button>
+        <button class="trip-button" value="20">$20</button>
+        <button class="trip-button" id="other-cost-btn" value="0">Otro</button>
         <button class="reverse-button" id="reverse-button">↩</button>
         <button class="test-json" id="test-json">Test</button>
         <!-- test -->
       </div>
-      <div class="diferent-trip-container">
+      <div class="diferent-trip-container" id="diferent-trip-container">
         <form action="./" method="get" class="diferent-trip-form">
-          <input type="number" placeholder="$--" />
+          <input type="number" placeholder="$--" id="diferent-trip-value" />
           <input type="submit" value="Aceptar" />
+          <input type="button" value="Cancelar" id="cancel-trip-btn" />
         </form>
       </div>
     </main>
