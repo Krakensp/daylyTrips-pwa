@@ -20,6 +20,12 @@ document.addEventListener("click", (e) => {
     let money = e.target.value;
     acumular(money, "trips-total");
     updateTodayMoney(money);
+    let $monnn = document.getElementById("total-label");
+    $monnn.classList.add("more-money");
+
+    setTimeout(function () {
+      $monnn.classList.remove("more-money");
+    }, 1000);
   }
 
   if (e.target.matches("#reverse-button")) {
@@ -48,6 +54,7 @@ document.addEventListener("click", (e) => {
     $costoDiferente.value = "";
 
     $containerDiferentTrip.classList.remove("active");
+    $containerDiferentTrip.classList.add("inactive");
   }
 });
 
@@ -69,5 +76,6 @@ document.addEventListener("submit", (e) => {
     );
 
     $containerDiferentTrip.classList.remove("active");
+    $containerDiferentTrip.classList.add("inactive");
   }
 });

@@ -1,5 +1,12 @@
 const CACHE_NAME = "v1_cache_viajes",
-  urlsToCache = ["./", "./style.css", "script.js", "./images/favicon.png"];
+  urlsToCache = [
+    "./",
+    "./style.css",
+    "script.js",
+    "acumular.js",
+    "setLocalMoney.js",
+    "./images/favicon.png",
+  ];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(CACHE_NAME)

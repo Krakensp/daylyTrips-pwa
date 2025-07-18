@@ -7,8 +7,13 @@
 }
 
 h1 {
+  margin: 0;
+  padding: 0;
   padding: 1rem;
   text-align: center;
+  background-color: #07679d;
+  color: #f0f9ff;
+  font-size: 2.5rem;
 }
 
 body {
@@ -16,10 +21,17 @@ body {
   height: 100dvh;
 }
 
+html {
+  font-family: "Merriweather", serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
 main {
   width: 100%;
   height: 100dvh;
-  background-color: rgb(19, 153, 216);
+  background-color: #3dbaf3;
 }
 
 .total-label {
@@ -29,7 +41,7 @@ main {
   background-color: rgb(39, 189, 84);
   color: rgb(243, 243, 243);
   font-size: 4rem;
-  border: solid 3px aliceblue;
+  border: solid 3px #e1f2fd;
 }
 
 .trips-buttons-container {
@@ -49,25 +61,29 @@ main {
   border-radius: 50%;
   border: none;
   font-size: 2rem;
-  background-color: rgb(11, 34, 77);
-  color: aliceblue;
-  border: solid 3px aliceblue;
+  background-color: #0a2f47;
+  color: #e1f2fd;
+  border: solid 3px #e1f2fd;
+  cursor: pointer;
 }
 
+.trip-button:hover {
+  animation: clicked-trip 0.5s;
+}
 .reverse-button,
 .test-json {
   position: absolute;
   height: 10vh;
   width: 10vh;
-
   border-radius: 20%;
   border: none;
   font-size: 2rem;
   background-color: rgb(143, 51, 23);
-  color: aliceblue;
-  border: solid 3px aliceblue;
+  color: #e1f2fd;
+  border: solid 3px #e1f2fd;
   bottom: 1rem;
   right: 0.5rem;
+  cursor: pointer;
 }
 
 .test-json {
@@ -78,14 +94,14 @@ main {
 .diferent-trip-container {
   position: absolute;
   top: 0;
-  right: -100%;
+  left: -100%;
+  opacity: 1;
   padding: 0.5rem;
 
-  opacity: 0;
   top: 0;
   width: 100%;
   height: 100dvh;
-  background-color: gray;
+  background-color: #bce5fb;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -107,14 +123,80 @@ main {
   font-size: 1.5rem;
   padding: 0.5rem;
   border-radius: 10px;
+  border: solid 3px #0781c2;
+  background-color: #80d1f9;
+  color: #0f496b;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .diferent-trip-form input[type="number"] {
-  background-color: rgb(26, 26, 27);
-  color: aliceblue;
+  background-color: #0a2f47;
+  border-color: #0781c2;
+  color: #e1f2fd;
+}
+
+.inactive {
+  animation: other-trip-inactive 0.7s;
 }
 
 .active {
   left: 0;
-  opacity: 1;
+  animation: other-trip-active 0.7s;
+  animation-fill-mode: forwards;
+}
+
+.more-money {
+  animation: money-label 1s;
+}
+
+@keyframes other-trip-active {
+  0% {
+    opacity: 0;
+    left: -100%;
+  }
+  100% {
+    opacity: 1;
+    left: 0;
+  }
+}
+
+@keyframes other-trip-inactive {
+  0% {
+    opacity: 1;
+    left: 0;
+  }
+  100% {
+    opacity: 0;
+    left: -100%;
+  }
+}
+
+@keyframes clicked-trip {
+  0% {
+    font-size: 2rem;
+  }
+
+  50% {
+    font-size: 0.5rem;
+
+    background-color: #80d1f9;
+  }
+
+  100% {
+    font-size: 2rem;
+  }
+}
+
+@keyframes money-label {
+  0% {
+    background-color: rgb(39, 189, 84);
+  }
+  50% {
+    background-color: gold;
+  }
+
+  100% {
+    background-color: rgb(39, 189, 84);
+  }
 }
