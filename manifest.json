@@ -1,6 +1,6 @@
 {
   "name": "Viajes Diarios",
-  "orientation": "landscape",
+  "orientation": "portrait",
   "display": "standalone",
   "start_url": "./?utm_source=web_app_manifest",
   "scope": "./",

@@ -31,9 +31,19 @@ html {
 main {
   width: 100%;
   height: 100dvh;
-  background-color: #3dbaf3;
+  background-color: #07679d;
 }
 
+.main-container {
+  width: 100%;
+  height: 100dvh;
+
+  background-image: url(images/LogoKraken.png);
+  background-position: center;
+  background-size: contain;
+
+  background-repeat: no-repeat;
+}
 .total-label {
   width: 100%;
   height: 5rem;
@@ -136,6 +146,24 @@ main {
   color: #e1f2fd;
 }
 
+.error-container {
+  background-color: #da4242;
+  color: rgb(255, 243, 243);
+  width: 100%;
+  height: 3rem;
+  position: absolute;
+  bottom: 0%;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-finded {
+  animation: error-animation 3s;
+  animation-fill-mode: forwards;
+}
+
 .inactive {
   animation: other-trip-inactive 0.7s;
 }
@@ -198,5 +226,23 @@ main {
 
   100% {
     background-color: rgb(39, 189, 84);
+  }
+}
+
+@keyframes error-animation {
+  0% {
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
   }
 }

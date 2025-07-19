@@ -18,28 +18,34 @@
   </head>
   <body>
     <main>
-      <h1>Control de Viajes</h1>
+      <div class="main-container">
+        <div>
+          <h1>Control de Viajes</h1>
 
-      <p class="total-label" id="total-label">
-        $ <span id="trips-total" data-last-value="">0</span>
-      </p>
-      <div class="trips-buttons-container">
-        <button class="trip-button" value="10">$10</button>
-        <button class="trip-button" value="15">$15</button>
-        <button class="trip-button" value="20">$20</button>
-        <button class="trip-button" id="other-cost-btn" value="0">Otro</button>
-        <button class="reverse-button" id="reverse-button">↩</button>
-        <button class="test-json" id="test-json">Test</button>
-        <!-- test -->
-      </div>
-      <div class="diferent-trip-container" id="diferent-trip-container">
-        <form action="./" method="get" class="diferent-trip-form">
-          <input type="number" placeholder="$--" id="diferent-trip-value" />
-          <input type="submit" value="Aceptar" />
-          <input type="button" value="Cancelar" id="cancel-trip-btn" />
-        </form>
-        <div id="error-container">
-          <p id="error-message">Error no ingresaste un valor</p>
+          <p class="total-label" id="total-label">
+            $ <span id="trips-total" data-last-value="">0</span>
+          </p>
+          <div class="trips-buttons-container">
+            <button class="trip-button" value="10">$10</button>
+            <button class="trip-button" value="15">$15</button>
+            <button class="trip-button" value="20">$20</button>
+            <button class="trip-button" id="other-cost-btn" value="0">
+              Otro
+            </button>
+            <button class="reverse-button" id="reverse-button">↩</button>
+            <button class="test-json" id="test-json">Test</button>
+            <!-- test -->
+          </div>
+          <div class="diferent-trip-container" id="diferent-trip-container">
+            <form action="./" method="get" class="diferent-trip-form">
+              <input type="number" placeholder="$--" id="diferent-trip-value" />
+              <input type="submit" value="Aceptar" />
+              <input type="button" value="Cancelar" id="cancel-trip-btn" />
+            </form>
+            <div id="error-container" class="error-container">
+              <p id="error-message">Error no ingresaste un valor</p>
+            </div>
+          </div>
         </div>
       </div>
     </main>

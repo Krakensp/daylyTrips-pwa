@@ -66,6 +66,11 @@ document.addEventListener("submit", (e) => {
   let costoDiferente = $costoDiferente.value;
 
   if (!costoDiferente) {
+    let $errorContainer = document.getElementById("error-container");
+    $errorContainer.classList.add("error-finded");
+    setTimeout(function () {
+      $errorContainer.classList.remove("error-finded");
+    }, 3000);
     console.error("el campo esta vacio");
   } else {
     acumular(costoDiferente, "trips-total");
