@@ -1,4 +1,5 @@
 import { acumular, revertir } from "./acumular.js";
+import setAdvance from "./calculateAdvance.js";
 
 import { getTodayMoney, updateTodayMoney } from "./setLocalMoney.js";
 
@@ -9,10 +10,14 @@ if ("serviceWorker" in navigator) {
     .catch((err) => console.warn("Error al tratar de registrar el sw", err));
 }
 
+let todayGoal = 1000;
+
 document.addEventListener("DOMContentLoaded", (e) => {
   let storagedMoney = getTodayMoney();
   storagedMoney = parseInt(storagedMoney);
   acumular(storagedMoney, "trips-total");
+
+  setAdvance(".goal-advance", todayGoal, storagedMoney);
 });
 
 document.addEventListener("click", (e) => {
@@ -22,6 +27,11 @@ document.addEventListener("click", (e) => {
     updateTodayMoney(money);
     let $monnn = document.getElementById("total-label");
     $monnn.classList.add("more-money");
+
+    let storagedMoney = getTodayMoney();
+    storagedMoney = parseInt(storagedMoney);
+
+    setAdvance(".goal-advance", todayGoal, storagedMoney);
 
     setTimeout(function () {
       $monnn.classList.remove("more-money");
@@ -33,6 +43,10 @@ document.addEventListener("click", (e) => {
       alert("No es posible revertir el movimiento anterior");
     } else {
       updateTodayMoney(revertir("trips-total") * -1);
+      let storagedMoney = getTodayMoney();
+      storagedMoney = parseInt(storagedMoney);
+
+      setAdvance(".goal-advance", todayGoal, storagedMoney);
     }
   }
 
@@ -75,6 +89,11 @@ document.addEventListener("submit", (e) => {
   } else {
     acumular(costoDiferente, "trips-total");
     updateTodayMoney(costoDiferente);
+
+    let storagedMoney = getTodayMoney();
+    storagedMoney = parseInt(storagedMoney);
+
+    setAdvance(".goal-advance", todayGoal, storagedMoney);
     $costoDiferente.value = "";
     let $containerDiferentTrip = document.getElementById(
       "diferent-trip-container"

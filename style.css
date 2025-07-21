@@ -44,6 +44,34 @@ main {
 
   background-repeat: no-repeat;
 }
+
+.goal-container {
+  width: 100%;
+  height: 2rem;
+  background-color: #80d1f9;
+}
+
+.goal-advance-container {
+  list-style-type: none; /* Remove bullets */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margins */
+  width: 100%;
+  height: inherit;
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  flex-wrap: wrap;
+  flex-shrink: 1;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+  padding: 0.2rem;
+}
+
+.goal-completed {
+  background-color: green;
+}
+
 .total-label {
   width: 100%;
   height: 5rem;
