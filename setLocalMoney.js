@@ -23,4 +23,8 @@ const updateTodayMoney = (money) => {
   localStorage.setItem("todayMoney", totalMoney);
 };
 
-export { getTodayMoney, updateTodayMoney };
+const resetTodayMoney = () => {
+  localStorage.setItem("todayMoney", 0);
+};
+
+export { getTodayMoney, updateTodayMoney, resetTodayMoney };

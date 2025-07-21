@@ -1,7 +1,12 @@
-import { acumular, revertir } from "./acumular.js";
+import { acumular, resetMoneyLabel, revertir } from "./acumular.js";
 import setAdvance from "./calculateAdvance.js";
+import { getTotalGoal, updateTodayGoal } from "./localTodayGoal.js";
 
-import { getTodayMoney, updateTodayMoney } from "./setLocalMoney.js";
+import {
+  getTodayMoney,
+  resetTodayMoney,
+  updateTodayMoney,
+} from "./setLocalMoney.js";
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker
@@ -10,11 +15,16 @@ if ("serviceWorker" in navigator) {
     .catch((err) => console.warn("Error al tratar de registrar el sw", err));
 }
 
-let todayGoal = 1000;
-
 document.addEventListener("DOMContentLoaded", (e) => {
+  let todayGoal = getTotalGoal();
+  if (todayGoal == 0) {
+    resetTodayMoney();
+    updateTodayGoal(prompt("Cual es tu meta de hoy?"));
+  }
+
   let storagedMoney = getTodayMoney();
   storagedMoney = parseInt(storagedMoney);
+
   acumular(storagedMoney, "trips-total");
 
   setAdvance(".goal-advance", todayGoal, storagedMoney);
@@ -31,6 +41,8 @@ document.addEventListener("click", (e) => {
     let storagedMoney = getTodayMoney();
     storagedMoney = parseInt(storagedMoney);
 
+    let todayGoal = getTotalGoal();
+
     setAdvance(".goal-advance", todayGoal, storagedMoney);
 
     setTimeout(function () {
@@ -45,6 +57,7 @@ document.addEventListener("click", (e) => {
       updateTodayMoney(revertir("trips-total") * -1);
       let storagedMoney = getTodayMoney();
       storagedMoney = parseInt(storagedMoney);
+      let todayGoal = getTotalGoal();
 
       setAdvance(".goal-advance", todayGoal, storagedMoney);
     }
@@ -64,11 +77,22 @@ document.addEventListener("click", (e) => {
     );
 
     let $costoDiferente = document.getElementById("diferent-trip-value");
-
     $costoDiferente.value = "";
-
     $containerDiferentTrip.classList.remove("active");
     $containerDiferentTrip.classList.add("inactive");
+  }
+
+  if (e.target.matches("#test-json")) {
+    resetTodayMoney();
+    updateTodayGoal(prompt("Cual es tu meta de hoy?"));
+    let storagedMoney = getTodayMoney();
+    storagedMoney = parseInt(storagedMoney);
+
+    let todayGoal = getTotalGoal();
+
+    resetMoneyLabel("trips-total");
+
+    setAdvance(".goal-advance", todayGoal, storagedMoney);
   }
 });
 
@@ -92,6 +116,7 @@ document.addEventListener("submit", (e) => {
 
     let storagedMoney = getTodayMoney();
     storagedMoney = parseInt(storagedMoney);
+    let todayGoal = getTotalGoal();
 
     setAdvance(".goal-advance", todayGoal, storagedMoney);
     $costoDiferente.value = "";

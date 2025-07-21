@@ -27,4 +27,9 @@ const modificar = (costValue, newValue, totalLabel) => {
   $totalLabel.innerText = newValue;
 };
 
-export { acumular, revertir };
+const resetMoneyLabel = (totalLabel) => {
+  const $totalLabel = d.getElementById(totalLabel);
+  $totalLabel.innerText = 0;
+};
+
+export { acumular, revertir, resetMoneyLabel };
