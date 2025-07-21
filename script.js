@@ -1,5 +1,5 @@
 import { acumular, resetMoneyLabel, revertir } from "./acumular.js";
-import setAdvance from "./calculateAdvance.js";
+import { setAdvance, resetAdvance } from "./calculateAdvance.js";
 import { getTotalGoal, updateTodayGoal } from "./localTodayGoal.js";
 
 import {
@@ -17,33 +17,30 @@ if ("serviceWorker" in navigator) {
 
 document.addEventListener("DOMContentLoaded", (e) => {
   let todayGoal = getTotalGoal();
+
   if (todayGoal == 0) {
-    resetTodayMoney();
-    updateTodayGoal(prompt("Cual es tu meta de hoy?"));
+    resetTravelApp();
   }
 
   let storagedMoney = getTodayMoney();
-  storagedMoney = parseInt(storagedMoney);
-
   acumular(storagedMoney, "trips-total");
-
   setAdvance(".goal-advance", todayGoal, storagedMoney);
 });
 
 document.addEventListener("click", (e) => {
   if (e.target.matches(".trip-button")) {
     let money = e.target.value;
+    let $monnn = document.getElementById("total-label");
+
     acumular(money, "trips-total");
     updateTodayMoney(money);
-    let $monnn = document.getElementById("total-label");
-    $monnn.classList.add("more-money");
 
     let storagedMoney = getTodayMoney();
-    storagedMoney = parseInt(storagedMoney);
-
     let todayGoal = getTotalGoal();
 
     setAdvance(".goal-advance", todayGoal, storagedMoney);
+
+    $monnn.classList.add("more-money");
 
     setTimeout(function () {
       $monnn.classList.remove("more-money");
@@ -83,16 +80,7 @@ document.addEventListener("click", (e) => {
   }
 
   if (e.target.matches("#test-json")) {
-    resetTodayMoney();
-    updateTodayGoal(prompt("Cual es tu meta de hoy?"));
-    let storagedMoney = getTodayMoney();
-    storagedMoney = parseInt(storagedMoney);
-
-    let todayGoal = getTotalGoal();
-
-    resetMoneyLabel("trips-total");
-
-    setAdvance(".goal-advance", todayGoal, storagedMoney);
+    resetTravelApp();
   }
 });
 
@@ -128,3 +116,10 @@ document.addEventListener("submit", (e) => {
     $containerDiferentTrip.classList.add("inactive");
   }
 });
+
+const resetTravelApp = () => {
+  resetTodayMoney();
+  updateTodayGoal(prompt("Cual es tu meta de hoy?"));
+  resetMoneyLabel("trips-total");
+  resetAdvance(".goal-advance");
+};

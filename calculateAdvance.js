@@ -21,4 +21,16 @@ const setAdvance = (advanceLabel, todayGoal, actualAdvance) => {
   });
 };
 
-export default setAdvance;
+const resetAdvance = (advanceLabel) => {
+  const goalClass = "goal-completed";
+
+  let $advanceItems = document.querySelectorAll(advanceLabel);
+
+  $advanceItems.forEach((element) => {
+    if (element.classList.contains(goalClass)) {
+      element.classList.remove(goalClass);
+    }
+  });
+};
+
+export { setAdvance, resetAdvance };

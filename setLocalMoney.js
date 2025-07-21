@@ -11,7 +11,7 @@ const getTodayMoney = () => {
     return todayMoney;
   } else {
     let todayMoney = localStorage.getItem("todayMoney");
-    return todayMoney;
+    return parseInt(todayMoney);
   }
 };
 
