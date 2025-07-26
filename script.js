@@ -1,12 +1,30 @@
 import { acumular, resetMoneyLabel, revertir } from "./acumular.js";
 import { setAdvance, resetAdvance } from "./calculateAdvance.js";
 import { getTotalGoal, updateTodayGoal } from "./localTodayGoal.js";
-
 import {
   getTodayMoney,
   resetTodayMoney,
   updateTodayMoney,
 } from "./setLocalMoney.js";
+import getLocation from "./handlers/handler-location.js";
+import {
+  transformTimeStampToDate,
+  transformTimeStampToTime,
+} from "./helpers/helper-timeConversor.js";
+
+let latitude,
+  longitude,
+  date = "",
+  time,
+  cost;
+
+let tripData = {
+  latitude,
+  longitude,
+  date,
+  time,
+  cost,
+};
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker
@@ -34,6 +52,9 @@ document.addEventListener("click", (e) => {
 
     acumular(money, "trips-total");
     updateTodayMoney(money);
+
+    tripData.cost = money;
+    getCurrentPosition();
 
     let storagedMoney = getTodayMoney();
     let todayGoal = getTotalGoal();
@@ -101,6 +122,8 @@ document.addEventListener("submit", (e) => {
   } else {
     acumular(costoDiferente, "trips-total");
     updateTodayMoney(costoDiferente);
+    tripData.cost = costoDiferente;
+    getCurrentPosition();
 
     let storagedMoney = getTodayMoney();
     storagedMoney = parseInt(storagedMoney);
@@ -122,4 +145,24 @@ const resetTravelApp = () => {
   updateTodayGoal(prompt("Cual es tu meta de hoy?"));
   resetMoneyLabel("trips-total");
   resetAdvance(".goal-advance");
+};
+
+const getCurrentPosition = () => {
+  (async () => {
+    try {
+      const { latitude, longitude, time } = await getLocation();
+
+      let textDate = transformTimeStampToDate(time);
+      let textTime = transformTimeStampToTime(time);
+
+      tripData.date = textDate;
+      tripData.latitude = latitude;
+      tripData.longitude = longitude;
+      tripData.time = textTime;
+
+      console.log(tripData);
+    } catch (err) {
+      console.log("Ocurrió un error:", err);
+    }
+  })();
 };
