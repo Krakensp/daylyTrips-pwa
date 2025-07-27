@@ -12,6 +12,8 @@ import {
   transformTimeStampToTime,
 } from "./helpers/helper-timeConversor.js";
 
+import { getTravels, createTravel } from "./handlers/handler-trip.js";
+
 let latitude,
   longitude,
   date = "",
@@ -34,6 +36,8 @@ if ("serviceWorker" in navigator) {
 }
 
 document.addEventListener("DOMContentLoaded", (e) => {
+  getTravels();
+
   let todayGoal = getTotalGoal();
 
   if (todayGoal == 0) {
@@ -55,6 +59,7 @@ document.addEventListener("click", (e) => {
 
     tripData.cost = money;
     getCurrentPosition();
+    createTravel(tripData);
 
     let storagedMoney = getTodayMoney();
     let todayGoal = getTotalGoal();
