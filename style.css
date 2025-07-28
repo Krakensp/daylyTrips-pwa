@@ -30,6 +30,7 @@ html {
 }
 main {
   width: 100%;
+  min-height: 100dvh; /*Remove after debugging*/
   height: 100dvh;
   background-color: #07679d;
 }
@@ -190,6 +191,21 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.table-container {
+  background-color: gray;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+th,
+td {
+  border: thick solid blue;
+  font-size: 0.8rem;
 }
 
 .error-finded {

@@ -47,8 +47,29 @@ const createTravel = (tripData) => {
 
 const getTravels = () => {
   createMainObject();
-  localStorage.getItem("travels");
-  console.log(localStorage.getItem("travels"));
+  let travels = localStorage.getItem("travels");
+  let objectTravels = JSON.parse(travels);
+  let listOfTravels = objectTravels.travels;
+
+  listOfTravels.forEach((travel) => {
+    displayTravels(travel, "table");
+  });
+};
+
+const displayTravels = (travel, table) => {
+  let { latitude, longitude, date, time, cost } = travel;
+  let array = [latitude, longitude, date, time, cost];
+  let $table = document.getElementById(table);
+
+  let row = document.createElement("tr");
+  for (let i = 0; i < array.length; i++) {
+    let cellCost = document.createElement("td");
+    let cellText = document.createTextNode(array[i]);
+    cellCost.appendChild(cellText);
+    row.appendChild(cellCost);
+  }
+
+  $table.appendChild(row);
 };
 
 const updateTodayTravels = () => {};
