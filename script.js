@@ -57,12 +57,10 @@ document.addEventListener("click", (e) => {
     acumular(money, "trips-total");
     updateTodayMoney(money);
 
-    tripData.cost = money;
-    getCurrentPosition();
-    createTravel(tripData);
-
     let storagedMoney = getTodayMoney();
     let todayGoal = getTotalGoal();
+
+    saveTravelData(money);
 
     setAdvance(".goal-advance", todayGoal, storagedMoney);
 
@@ -127,8 +125,7 @@ document.addEventListener("submit", (e) => {
   } else {
     acumular(costoDiferente, "trips-total");
     updateTodayMoney(costoDiferente);
-    tripData.cost = costoDiferente;
-    getCurrentPosition();
+    saveTravelData(costoDiferente);
 
     let storagedMoney = getTodayMoney();
     storagedMoney = parseInt(storagedMoney);
@@ -147,12 +144,41 @@ document.addEventListener("submit", (e) => {
 
 const resetTravelApp = () => {
   resetTodayMoney();
-  updateTodayGoal(prompt("Cual es tu meta de hoy?"));
+
+  let pass = false;
+  let goal = undefined;
+  do {
+    goal = prompt("Cual es tu meta de hoy?");
+
+    if (
+      isNaN(goal) ||
+      goal === undefined ||
+      !goal ||
+      goal > 10000 ||
+      goal <= 0
+    ) {
+      alert("Error");
+      if (goal > 10000) {
+        alert("La cantidad no puede ser mayor a 10,000");
+      }
+      if (goal <= 0) {
+        alert("La cantidad debe ser mayor a 0");
+      }
+      if (isNaN(goal) || goal === undefined || !goal) {
+        alert("Debes escribir solo números");
+      }
+      pass = false;
+    } else {
+      pass = true;
+    }
+  } while (!pass);
+
+  updateTodayGoal(goal);
   resetMoneyLabel("trips-total");
   resetAdvance(".goal-advance");
 };
 
-const getCurrentPosition = () => {
+const saveTravelData = (cost) => {
   (async () => {
     try {
       const { latitude, longitude, time } = await getLocation();
@@ -160,12 +186,13 @@ const getCurrentPosition = () => {
       let textDate = transformTimeStampToDate(time);
       let textTime = transformTimeStampToTime(time);
 
-      tripData.date = textDate;
-      tripData.latitude = latitude;
       tripData.longitude = longitude;
+      tripData.latitude = latitude;
+      tripData.date = textDate;
       tripData.time = textTime;
+      tripData.cost = cost;
 
-      console.log(tripData);
+      createTravel(tripData);
     } catch (err) {
       console.log("Ocurrió un error:", err);
     }

@@ -1,9 +1,0 @@
-{
-  "horarios": [
-    { "nombre": "mañana", "inicio": "04:00", "final": "09:59" },
-    { "nombre": "intermedio", "inicio": "10:00", "final": "14:59" },
-    { "nombre": "tarde", "inicio": "15:00", "final": "21:59" },
-    { "nombre": "noche", "inicio": "22:00", "final": "00:59" },
-    { "nombre": "libre", "inicio": "01:00", "final": "03:59" }
-  ]
-}

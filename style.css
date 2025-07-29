@@ -98,7 +98,8 @@ main {
   flex-direction: column;
 }
 
-.trip-button {
+.trip-button,
+.other-trip-button {
   height: 15vh;
   width: 15vh;
   padding: 0.5rem;
@@ -111,7 +112,8 @@ main {
   cursor: pointer;
 }
 
-.trip-button:hover {
+.trip-button:hover,
+.other-trip-button:hover {
   animation: clicked-trip 0.5s;
 }
 .reverse-button,

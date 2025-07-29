@@ -1,10 +1,16 @@
 const CACHE_NAME = "v1_cache_viajes",
   urlsToCache = [
     "./",
+    "./handlers/handler-location.js",
+    "./handlers/handler-trip.js",
+    "./helpers/helper-timeConversor.js",
     "./style.css",
-    "script.js",
-    "acumular.js",
-    "setLocalMoney.js",
+    "./acumular.js",
+    "./calculateAdvance.js",
+    "./index.html",
+    "./localTodayGoal.js",
+    "./script.js",
+    "./setLocalMoney.js",
     "./images/favicon.png",
   ];
 
