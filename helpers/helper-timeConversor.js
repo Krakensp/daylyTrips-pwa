@@ -1,10 +1,10 @@
 const transformTimeStampToDate = (timeStamp) => {
   const date = new Date(timeStamp);
   const year = date.getFullYear();
-  const month = date.getMonth() + 1;
+  const month = date.getMonth();
   const day = date.getDate();
 
-  let textDate = day + "/" + month + "/" + year;
+  let textDate = month + "-" + day + "-" + year;
 
   return textDate;
 };

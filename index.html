@@ -19,7 +19,7 @@
   <body>
     <main>
       <div class="main-container">
-        <div>
+        <div class="main-action-container">
           <h1>Control de Viajes</h1>
           <div class="goal-container">
             <ul class="goal-advance-container">
@@ -45,35 +45,33 @@
             <button class="other-trip-button" id="other-cost-btn" value="0">
               Otro
             </button>
-            <button class="reverse-button" id="reverse-button">↩</button>
+          </div>
+          <div class="menu" id="menu">
             <button class="test-json" id="test-json">New</button>
-            <!-- test -->
-          </div>
-          <div class="diferent-trip-container" id="diferent-trip-container">
-            <form action="./" method="get" class="diferent-trip-form">
-              <input type="number" placeholder="$--" id="diferent-trip-value" />
-              <input type="submit" value="Aceptar" />
-              <input type="button" value="Cancelar" id="cancel-trip-btn" />
-            </form>
-            <div id="error-container" class="error-container">
-              <p id="error-message">Error no ingresaste un valor</p>
-            </div>
-          </div>
-          <div id="table-container" class="table-container">
-            <table id="table">
-              <thead>
-                Tabla de viajes
-              </thead>
-              <tr>
-                <td>InCoord</td>
-                <td>FinCoord</td>
-                <td>Date</td>
-                <td>Time</td>
-                <td>Cost</td>
-              </tr>
-            </table>
+            <button class="history-btn" id="history-btn">📆</button>
+            <button class="reverse-button" id="reverse-button">↩</button>
           </div>
         </div>
+      </div>
+      <div class="diferent-trip-container" id="diferent-trip-container">
+        <form action="./" method="get" class="diferent-trip-form">
+          <input type="number" placeholder="$--" id="diferent-trip-value" />
+          <input type="submit" value="Aceptar" />
+          <input type="button" value="Cancelar" id="cancel-trip-btn" />
+        </form>
+        <div id="error-container" class="error-container">
+          <p id="error-message">Error no ingresaste un valor</p>
+        </div>
+      </div>
+      <div id="table-container" class="table-container">
+        <div class="history-header">
+          <button class="control-btn" id="prev-date-btn"><-</button>
+          <h2 id="history-date" data-date="hoy">Hoy</h2>
+          <button class="control-btn" id="next-date-btn">-></button>
+        </div>
+
+        <table id="table"></table>
+        <button class="close-btn" id="close-btn">X</button>
       </div>
     </main>
     <script src="script.js?v=1.0" type="module"></script>

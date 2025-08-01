@@ -36,8 +36,6 @@ if ("serviceWorker" in navigator) {
 }
 
 document.addEventListener("DOMContentLoaded", (e) => {
-  getTravels();
-
   let todayGoal = getTotalGoal();
 
   if (todayGoal == 0) {
@@ -105,6 +103,71 @@ document.addEventListener("click", (e) => {
 
   if (e.target.matches("#test-json")) {
     resetTravelApp();
+  }
+
+  if (e.target.matches("#prev-date-btn")) {
+    let $dateLabel = document.getElementById("history-date");
+    let labelDate = $dateLabel.dataset.date;
+    let actualDate = new Date(labelDate);
+    let actualDay = actualDate.getDate();
+    actualDate.setDate(actualDay - 1);
+    console.log(actualDate);
+
+    let $tabla = document.getElementById("table");
+    $dateLabel.dataset.date = actualDate;
+    $tabla.innerHTML =
+      " <thead> Tabla de viajes </thead> <tr> <td>InCoord</td><td>FinCoord</td><td>Date</td><td>Time</td>      <td>Cost</td></tr>";
+    $dateLabel.innerText =
+      actualDate.getDate() +
+      "/" +
+      (actualDate.getMonth() + 1) +
+      "/" +
+      actualDate.getFullYear();
+
+    getTravels(actualDate);
+  }
+
+  if (e.target.matches("#next-date-btn")) {
+    let $dateLabel = document.getElementById("history-date");
+    let labelDate = $dateLabel.dataset.date;
+    let actualDate = new Date(labelDate);
+    let actualDay = actualDate.getDate();
+    actualDate.setDate(actualDay + 1);
+    console.log(actualDate);
+
+    let $tabla = document.getElementById("table");
+    $dateLabel.dataset.date = actualDate;
+    $tabla.innerHTML =
+      " <thead> Tabla de viajes </thead> <tr> <td>InCoord</td><td>FinCoord</td><td>Date</td><td>Time</td>      <td>Cost</td></tr>";
+
+    $dateLabel.innerText =
+      actualDate.getDate() +
+      "/" +
+      (actualDate.getMonth() + 1) +
+      "/" +
+      actualDate.getFullYear();
+    getTravels(actualDate);
+  }
+
+  if (e.target.matches("#history-btn")) {
+    let $history = document.getElementById("table-container");
+
+    let actualDate = new Date();
+    let $tabla = document.getElementById("table");
+    let $dateLabel = document.getElementById("history-date");
+
+    $history.classList.add("active");
+
+    $dateLabel.dataset.date = actualDate;
+    $tabla.innerHTML =
+      " <thead> Tabla de viajes </thead> <tr> <td>InCoord</td><td>FinCoord</td><td>Date</td><td>Time</td>      <td>Cost</td></tr>";
+
+    getTravels(actualDate);
+  }
+
+  if (e.target.matches("#close-btn")) {
+    let $history = document.getElementById("table-container");
+    $history.classList.remove("active");
   }
 });
 
@@ -183,12 +246,12 @@ const saveTravelData = (cost) => {
     try {
       const { latitude, longitude, time } = await getLocation();
 
-      let textDate = transformTimeStampToDate(time);
+      // let textDate = transformTimeStampToDate(time);
       let textTime = transformTimeStampToTime(time);
 
       tripData.longitude = longitude;
       tripData.latitude = latitude;
-      tripData.date = textDate;
+      tripData.date = time;
       tripData.time = textTime;
       tripData.cost = cost;
 
