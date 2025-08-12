@@ -47,43 +47,27 @@ const createTravel = (tripData) => {
   localStorage.setItem("travels", viajesJSON);
 };
 
-// const getTravels = () => {
-//   createMainObject();
-//   let travels = localStorage.getItem("travels");
-//   let objectTravels = JSON.parse(travels);
-//   let listOfTravels = objectTravels.travels;
-
-//   listOfTravels.forEach((travel) => {
-//     displayTravels(travel, "table");
-//   });
-// };
-
-// const displayTravels = (travel, table) => {
-//   let { latitude, longitude, date, time, cost } = travel;
-//   let array = [latitude, longitude, date, time, cost];
-//   let $table = document.getElementById(table);
-
-//   let row = document.createElement("tr");
-//   for (let i = 0; i < array.length; i++) {
-//     let cellCost = document.createElement("td");
-//     let cellText = document.createTextNode(array[i]);
-//     cellCost.appendChild(cellText);
-//     row.appendChild(cellCost);
-//   }
-
-//   $table.appendChild(row);
-// };
-
 const getTravels = (date) => {
   const displayTravels = (travel, table) => {
     let { latitude, longitude, date, time, cost } = travel;
-    let array = [latitude, longitude, date, time, cost];
+    let link =
+      "https://www.google.com/maps/@" + latitude + "," + longitude + ",19z";
+    let array = [link, time, cost];
     let $table = document.getElementById(table);
 
     let row = document.createElement("tr");
     for (let i = 0; i < array.length; i++) {
       let cellCost = document.createElement("td");
-      let cellText = document.createTextNode(array[i]);
+
+      let cellText = null;
+      if (i == 0) {
+        cellText = document.createElement("a");
+        cellText.href = link;
+        cellText.innerText = "Ver viaje";
+        cellText.target = "_blank";
+      } else {
+        cellText = document.createTextNode(array[i]);
+      }
       cellCost.appendChild(cellText);
       row.appendChild(cellCost);
     }

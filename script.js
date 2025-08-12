@@ -116,7 +116,7 @@ document.addEventListener("click", (e) => {
     let $tabla = document.getElementById("table");
     $dateLabel.dataset.date = actualDate;
     $tabla.innerHTML =
-      " <thead> Tabla de viajes </thead> <tr> <td>InCoord</td><td>FinCoord</td><td>Date</td><td>Time</td>      <td>Cost</td></tr>";
+      " <thead> Tabla de viajes </thead> <tr> <td>Ubicación</td><td>Hora</td><td>Costo</td></tr>";
     $dateLabel.innerText =
       actualDate.getDate() +
       "/" +
@@ -138,7 +138,7 @@ document.addEventListener("click", (e) => {
     let $tabla = document.getElementById("table");
     $dateLabel.dataset.date = actualDate;
     $tabla.innerHTML =
-      " <thead> Tabla de viajes </thead> <tr> <td>InCoord</td><td>FinCoord</td><td>Date</td><td>Time</td>      <td>Cost</td></tr>";
+      " <thead> Tabla de viajes </thead> <tr> <td>Ubicación</td><td>Hora</td><td>Costo</td></tr>";
 
     $dateLabel.innerText =
       actualDate.getDate() +
@@ -160,7 +160,7 @@ document.addEventListener("click", (e) => {
 
     $dateLabel.dataset.date = actualDate;
     $tabla.innerHTML =
-      " <thead> Tabla de viajes </thead> <tr> <td>InCoord</td><td>FinCoord</td><td>Date</td><td>Time</td>      <td>Cost</td></tr>";
+      " <thead> Tabla de viajes </thead> <tr> <td>Ubicación</td><td>Hora</td><td>Costo</td></tr>";
 
     getTravels(actualDate);
   }
