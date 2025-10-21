@@ -11,17 +11,24 @@ class Travel {
 
 const STORAGE_KEY = "travels";
 
-const getTravels = () => {
+const getTravels = async () => {
   const data = localStorage.getItem("travels");
   return data ? JSON.parse(data) : [];
 };
 
-const saveTravels = (travels) => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(travels));
+const saveTravels = async (travels) => {
+  return new Promise((resolve, reject) => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(travels));
+      resolve();
+    } catch (error) {
+      reject(error);
+    }
+  });
 };
 
-const createTravels = () => {
-  saveTravels([]);
+const createTravels = async () => {
+  await saveTravels([]);
 };
 
 const addTravel = (cost) => {
@@ -34,24 +41,24 @@ const addTravel = (cost) => {
       let travelData = new Travel(latitude, longitude, time, cost);
 
       travels.push(travelData);
-      saveTravels(travels);
+      await saveTravels(travels);
     } catch (err) {
       console.log("Ocurrió un error:", err);
     }
   })();
 };
 
-const getLastTravel = () => {
-  const travels = getTravels();
+const getLastTravel = async () => {
+  const travels = await getTravels();
   const lastTravel = travels.length - 1;
   return travels[lastTravel];
 };
 
-const removeTravel = () => {
-  const travels = getTravels();
+const removeTravel = async () => {
+  const travels = await getTravels();
 
   travels.pop();
-  saveTravels(travels);
+  await saveTravels(travels);
 };
 
 export { createTravels, addTravel, getTravels, removeTravel, getLastTravel };
