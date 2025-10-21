@@ -31,21 +31,20 @@ const createTravels = async () => {
   await saveTravels([]);
 };
 
-const addTravel = (cost) => {
-  (async () => {
-    try {
-      const travels = await getTravels();
+const addTravel = async (cost) => {
+  try {
+    const travels = await getTravels();
+    const { latitude, longitude, time } = await getLocation();
 
-      const { latitude, longitude, time } = await getLocation();
+    const travelData = new Travel(latitude, longitude, time, cost);
+    travels.push(travelData);
 
-      let travelData = new Travel(latitude, longitude, time, cost);
-
-      travels.push(travelData);
-      await saveTravels(travels);
-    } catch (err) {
-      console.log("Ocurrió un error:", err);
-    }
-  })();
+    await saveTravels(travels);
+    return travelData; // <- devuelve el viaje agregado
+  } catch (err) {
+    console.error("Ocurrió un error:", err);
+    return null;
+  }
 };
 
 const getLastTravel = async () => {
@@ -55,10 +54,16 @@ const getLastTravel = async () => {
 };
 
 const removeTravel = async () => {
-  const travels = await getTravels();
+  try {
+    const travels = await getTravels();
 
-  travels.pop();
-  await saveTravels(travels);
+    travels.pop();
+    await saveTravels(travels);
+    return 1;
+  } catch (error) {
+    console.error("Error inesperado al eliminar viaje:", error);
+    return null;
+  }
 };
 
 export { createTravels, addTravel, getTravels, removeTravel, getLastTravel };

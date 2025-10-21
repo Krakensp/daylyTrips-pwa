@@ -68,17 +68,41 @@ document.addEventListener("click", (e) => {
 
   // **********MAIN TRIGGERS************
   if (e.target.matches($TRIP_BUTTON)) {
-    addTravel(e.target.value);
-    updateTotalReached(e.target.value);
-    frontEndCharge();
+    (async () => {
+      showLoader();
+      try {
+        const res = await addTravel(e.target.value);
+
+        if (!res) {
+          console.error("Error al agregar el viaje");
+        } else {
+          updateTotalReached(e.target.value);
+          frontEndCharge();
+        }
+      } catch (error) {
+        console.error("Error inesperado al agregar viaje:", error);
+      } finally {
+        hideLoader();
+      }
+    })();
   }
+
   if (e.target.matches($REVERSE_BUTTON)) {
-    let lastTravel = getLastTravel();
-    if (lastTravel) {
-      updateTotalReached(lastTravel.cost * -1);
-      removeTravel();
-      frontEndCharge();
-    }
+    (async () => {
+      let lastTravel = await getLastTravel();
+      showLoader();
+      try {
+        const result = await removeTravel();
+        if (result === 1) {
+          updateTotalReached(lastTravel.cost * -1);
+          frontEndCharge();
+        }
+      } catch (error) {
+        console.error("Error inesperado al eliminar viaje:", error);
+      } finally {
+        hideLoader();
+      }
+    })();
   }
 
   // ********** TYPED COST MENU ******************
@@ -115,3 +139,11 @@ document.addEventListener("click", (e) => {
     displayHistory(nextDayHistory());
   }
 });
+
+function showLoader() {
+  document.getElementById("app-loader").classList.remove("hidden");
+}
+
+function hideLoader() {
+  document.getElementById("app-loader").classList.add("hidden");
+}
