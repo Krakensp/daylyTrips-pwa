@@ -12,7 +12,7 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="style.css?v=1.2" />
+    <link rel="stylesheet" href="style.css?v=2.0" />
     <link rel="icon" href="images/favicon.png?v=1.0" type="image/x-icon" />
     <title>Viajes Diarios</title>
   </head>
@@ -47,7 +47,7 @@
             </button>
           </div>
           <div class="menu" id="menu">
-            <button class="test-json" id="test-json">New</button>
+            <!-- <button class="test-json" id="test-json">Menu</button> -->
             <button class="history-btn" id="history-btn">📆</button>
             <button class="reverse-button" id="reverse-button">↩</button>
           </div>
@@ -63,17 +63,29 @@
           <p id="error-message">Error no ingresaste un valor</p>
         </div>
       </div>
-      <div id="table-container" class="table-container">
+      <div id="history-container" class="history-container">
         <div class="history-header">
           <button class="control-btn" id="prev-date-btn"><-</button>
           <h2 id="history-date" data-date="hoy">Hoy</h2>
           <button class="control-btn" id="next-date-btn">-></button>
         </div>
+        <div class="history-body">
+          <div class="card">
+            <div class="title" id="title"><span id="history-title"></span></div>
+            <div class="subtitle" id="subtitle"></div>
+            <canvas
+              id="pie"
+              width="480"
+              height="420"
+              aria-label="Gráfica circular con diez valores"
+            ></canvas>
+          </div>
 
-        <table id="table"></table>
-        <button class="close-btn" id="close-btn">X</button>
+          <div id="tooltip" class="tooltip" style="display: none"></div>
+          <button class="close-btn" id="close-btn">X</button>
+        </div>
       </div>
     </main>
-    <script src="script.js?v=1.2" type="module"></script>
+    <script src="script.js?v=2.0" type="module"></script>
   </body>
 </html>

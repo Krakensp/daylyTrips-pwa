@@ -1,32 +1,33 @@
-import { acumular, resetMoneyLabel, revertir } from "./acumular.js";
-import { setAdvance, resetAdvance } from "./calculateAdvance.js";
-import { getTotalGoal, updateTodayGoal } from "./localTodayGoal.js";
+import validateInitialStorage from "./buisnessRules/validate_initial_storage.js";
 import {
-  getTodayMoney,
-  resetTodayMoney,
-  updateTodayMoney,
-} from "./setLocalMoney.js";
-import getLocation from "./handlers/handler-location.js";
+  closeDailyRegister,
+  getDailyRegister,
+  updateDailyRegisterGoal,
+} from "./localStorageHandlers/handler-daily-register.js";
 import {
-  transformTimeStampToDate,
-  transformTimeStampToTime,
-} from "./helpers/helper-timeConversor.js";
-
-import { getTravels, createTravel } from "./handlers/handler-trip.js";
-
-let latitude,
-  longitude,
-  date = "",
-  time,
-  cost;
-
-let tripData = {
-  latitude,
-  longitude,
-  date,
-  time,
-  cost,
-};
+  getTotalReached,
+  updateTotalReached,
+} from "./localStorageHandlers/totalReached.js";
+import {
+  addTravel,
+  getLastTravel,
+  getTravels,
+  removeTravel,
+} from "./localStorageHandlers/handler-trip.js";
+import { updateHistory } from "./localStorageHandlers/handler-history.js";
+import validateNewDay from "./buisnessRules/date_validation.js";
+import frontEndCharge from "./frontEnd/front_end_charge.js";
+import inputTodayGoal from "./frontEnd/input_today_goal.js";
+import resetLocalStorage from "./buisnessRules/reset_local_storage.js";
+import {
+  showHistoryWindow,
+  hideHistoryWindow,
+  displayHistory,
+  removeHistory,
+  previousDayHistory,
+  nextDayHistory,
+} from "./frontEnd/front_history_handler.js";
+import handlerTypedCost from "./helpers/handler_typed_cost.js";
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker
@@ -36,228 +37,81 @@ if ("serviceWorker" in navigator) {
 }
 
 document.addEventListener("DOMContentLoaded", (e) => {
-  let todayGoal = getTotalGoal();
+  validateInitialStorage();
+  let today = new Date();
 
-  if (todayGoal == 0) {
-    resetTravelApp();
+  let dailyRegister = getDailyRegister();
+
+  if (!validateNewDay(dailyRegister.dateTime)) {
+    closeDailyRegister(getTotalReached(), getTravels());
+    dailyRegister = getDailyRegister();
+    updateHistory(dailyRegister);
+
+    resetLocalStorage();
+    updateDailyRegisterGoal(inputTodayGoal());
   }
-
-  let storagedMoney = getTodayMoney();
-  acumular(storagedMoney, "trips-total");
-  setAdvance(".goal-advance", todayGoal, storagedMoney);
+  frontEndCharge();
 });
 
 document.addEventListener("click", (e) => {
-  if (e.target.matches(".trip-button")) {
-    let money = e.target.value;
-    let $monnn = document.getElementById("total-label");
+  // *************BUTTONS**********
+  const $TRIP_BUTTON = ".trip-button";
+  const $REVERSE_BUTTON = "#reverse-button";
+  const $TYPED_COST_BUTTON = "#other-cost-btn";
+  const $TYPED_COST_CANCEL_BUTTON = "#cancel-trip-btn";
+  const $HISTORY_BUTTON = "#history-btn";
+  const $CLOSE_HISTORY_BUTTON = "#close-btn";
+  const $BACK_HISTORY_BTN = "#prev-date-btn";
+  const $FORWARD_HISTORY_BTN = "#next-date-btn";
+  // ************ TAGS*************
+  const $TYPED_COST_CONTAINER = "diferent-trip-container";
 
-    acumular(money, "trips-total");
-    updateTodayMoney(money);
-
-    let storagedMoney = getTodayMoney();
-    let todayGoal = getTotalGoal();
-
-    saveTravelData(money);
-
-    setAdvance(".goal-advance", todayGoal, storagedMoney);
-
-    $monnn.classList.add("more-money");
-
-    setTimeout(function () {
-      $monnn.classList.remove("more-money");
-    }, 1000);
+  // **********MAIN TRIGGERS************
+  if (e.target.matches($TRIP_BUTTON)) {
+    addTravel(e.target.value);
+    updateTotalReached(e.target.value);
+    frontEndCharge();
   }
-
-  if (e.target.matches("#reverse-button")) {
-    if (document.getElementById("trips-total").dataset.lastValue == 0) {
-      alert("No es posible revertir el movimiento anterior");
-    } else {
-      updateTodayMoney(revertir("trips-total") * -1);
-      let storagedMoney = getTodayMoney();
-      storagedMoney = parseInt(storagedMoney);
-      let todayGoal = getTotalGoal();
-
-      setAdvance(".goal-advance", todayGoal, storagedMoney);
+  if (e.target.matches($REVERSE_BUTTON)) {
+    let lastTravel = getLastTravel();
+    if (lastTravel) {
+      updateTotalReached(lastTravel.cost * -1);
+      removeTravel();
+      frontEndCharge();
     }
   }
 
-  if (e.target.matches("#other-cost-btn")) {
-    let $containerDiferentTrip = document.getElementById(
-      "diferent-trip-container"
-    );
-
+  // ********** TYPED COST MENU ******************
+  if (e.target.matches($TYPED_COST_BUTTON)) {
+    let $containerDiferentTrip = document.getElementById($TYPED_COST_CONTAINER);
     $containerDiferentTrip.classList.add("active");
   }
-
-  if (e.target.matches("#cancel-trip-btn")) {
-    let $containerDiferentTrip = document.getElementById(
-      "diferent-trip-container"
-    );
-
-    let $costoDiferente = document.getElementById("diferent-trip-value");
-    $costoDiferente.value = "";
+  if (e.target.matches($TYPED_COST_CANCEL_BUTTON)) {
+    let $containerDiferentTrip = document.getElementById($TYPED_COST_CONTAINER);
     $containerDiferentTrip.classList.remove("active");
     $containerDiferentTrip.classList.add("inactive");
   }
 
-  if (e.target.matches("#test-json")) {
-    resetTravelApp();
+  document.addEventListener("submit", (e) => {
+    e.preventDefault();
+    handlerTypedCost();
+  });
+
+  // ************ HISTORY MENU********************
+  if (e.target.matches($HISTORY_BUTTON)) {
+    let today = new Date();
+    showHistoryWindow();
+    displayHistory(today);
+  }
+  if (e.target.matches($CLOSE_HISTORY_BUTTON)) {
+    hideHistoryWindow();
+    removeHistory();
   }
 
-  if (e.target.matches("#prev-date-btn")) {
-    let $dateLabel = document.getElementById("history-date");
-    let labelDate = $dateLabel.dataset.date;
-    let actualDate = new Date(labelDate);
-    let actualDay = actualDate.getDate();
-    actualDate.setDate(actualDay - 1);
-    console.log(actualDate);
-
-    let $tabla = document.getElementById("table");
-    $dateLabel.dataset.date = actualDate;
-    $tabla.innerHTML =
-      " <thead> Tabla de viajes </thead> <tr> <td>Ubicación</td><td>Hora</td><td>Costo</td></tr>";
-    $dateLabel.innerText =
-      actualDate.getDate() +
-      "/" +
-      (actualDate.getMonth() + 1) +
-      "/" +
-      actualDate.getFullYear();
-
-    getTravels(actualDate);
+  if (e.target.matches($BACK_HISTORY_BTN)) {
+    displayHistory(previousDayHistory());
   }
-
-  if (e.target.matches("#next-date-btn")) {
-    let $dateLabel = document.getElementById("history-date");
-    let labelDate = $dateLabel.dataset.date;
-    let actualDate = new Date(labelDate);
-    let actualDay = actualDate.getDate();
-    actualDate.setDate(actualDay + 1);
-    console.log(actualDate);
-
-    let $tabla = document.getElementById("table");
-    $dateLabel.dataset.date = actualDate;
-    $tabla.innerHTML =
-      " <thead> Tabla de viajes </thead> <tr> <td>Ubicación</td><td>Hora</td><td>Costo</td></tr>";
-
-    $dateLabel.innerText =
-      actualDate.getDate() +
-      "/" +
-      (actualDate.getMonth() + 1) +
-      "/" +
-      actualDate.getFullYear();
-    getTravels(actualDate);
-  }
-
-  if (e.target.matches("#history-btn")) {
-    let $history = document.getElementById("table-container");
-
-    let actualDate = new Date();
-    let $tabla = document.getElementById("table");
-    let $dateLabel = document.getElementById("history-date");
-
-    $history.classList.add("active");
-
-    $dateLabel.dataset.date = actualDate;
-    $tabla.innerHTML =
-      " <thead> Tabla de viajes </thead> <tr> <td>Ubicación</td><td>Hora</td><td>Costo</td></tr>";
-
-    getTravels(actualDate);
-  }
-
-  if (e.target.matches("#close-btn")) {
-    let $history = document.getElementById("table-container");
-    $history.classList.remove("active");
+  if (e.target.matches($FORWARD_HISTORY_BTN)) {
+    displayHistory(nextDayHistory());
   }
 });
-
-document.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  let $costoDiferente = document.getElementById("diferent-trip-value");
-
-  let costoDiferente = $costoDiferente.value;
-
-  if (!costoDiferente) {
-    let $errorContainer = document.getElementById("error-container");
-    $errorContainer.classList.add("error-finded");
-    setTimeout(function () {
-      $errorContainer.classList.remove("error-finded");
-    }, 3000);
-    console.error("el campo esta vacio");
-  } else {
-    acumular(costoDiferente, "trips-total");
-    updateTodayMoney(costoDiferente);
-    saveTravelData(costoDiferente);
-
-    let storagedMoney = getTodayMoney();
-    storagedMoney = parseInt(storagedMoney);
-    let todayGoal = getTotalGoal();
-
-    setAdvance(".goal-advance", todayGoal, storagedMoney);
-    $costoDiferente.value = "";
-    let $containerDiferentTrip = document.getElementById(
-      "diferent-trip-container"
-    );
-
-    $containerDiferentTrip.classList.remove("active");
-    $containerDiferentTrip.classList.add("inactive");
-  }
-});
-
-const resetTravelApp = () => {
-  resetTodayMoney();
-
-  let pass = false;
-  let goal = undefined;
-  do {
-    goal = prompt("Cual es tu meta de hoy?");
-
-    if (
-      isNaN(goal) ||
-      goal === undefined ||
-      !goal ||
-      goal > 10000 ||
-      goal <= 0
-    ) {
-      alert("Error");
-      if (goal > 10000) {
-        alert("La cantidad no puede ser mayor a 10,000");
-      }
-      if (goal <= 0) {
-        alert("La cantidad debe ser mayor a 0");
-      }
-      if (isNaN(goal) || goal === undefined || !goal) {
-        alert("Debes escribir solo números");
-      }
-      pass = false;
-    } else {
-      pass = true;
-    }
-  } while (!pass);
-
-  updateTodayGoal(goal);
-  resetMoneyLabel("trips-total");
-  resetAdvance(".goal-advance");
-};
-
-const saveTravelData = (cost) => {
-  (async () => {
-    try {
-      const { latitude, longitude, time } = await getLocation();
-
-      // let textDate = transformTimeStampToDate(time);
-      let textTime = transformTimeStampToTime(time);
-
-      tripData.longitude = longitude;
-      tripData.latitude = latitude;
-      tripData.date = time;
-      tripData.time = textTime;
-      tripData.cost = cost;
-
-      createTravel(tripData);
-    } catch (err) {
-      console.log("Ocurrió un error:", err);
-    }
-  })();
-};

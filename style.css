@@ -42,11 +42,9 @@ main {
 .main-container {
   width: 100%;
   height: 100dvh;
-
   background-image: url(images/LogoKraken.png);
   background-position: center;
   background-size: contain;
-
   background-repeat: no-repeat;
 }
 
@@ -215,7 +213,7 @@ main {
   align-items: center;
 }
 
-.table-container {
+.history-container {
   position: absolute;
   top: 0;
   left: -100%;
@@ -223,6 +221,7 @@ main {
   background-color: #80d1f9;
   width: 100%;
   min-height: 100dvh;
+  max-height: 100%;
 }
 
 .history-header {
@@ -233,6 +232,13 @@ main {
   padding: 0.5rem;
   align-items: center;
   color: var(--font-color);
+}
+
+.history-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .control-btn {
@@ -341,4 +347,45 @@ td {
   100% {
     opacity: 0;
   }
+}
+
+/* Grphic */
+:root {
+  --bg: #0f1724;
+  --card: #0b1220;
+  --muted: #013680;
+}
+
+.card {
+  /* height: inherit; */
+  padding: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+canvas {
+  background: transparent;
+  border-radius: 8px;
+}
+
+.value {
+  margin-left: auto;
+  color: var(--muted);
+}
+
+.title {
+  font-size: 25px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: rgb(185, 38, 21);
+}
+.subtitle {
+  margin: 0.5rem 0;
+  text-align: center;
+  width: 90%;
+  color: var(--muted);
+  font-size: 20px;
+  font-weight: bold;
 }

@@ -9,7 +9,7 @@ const getLocation = async () => {
           const latitude = position.coords.latitude;
           const longitude = position.coords.longitude;
           const time = position.timestamp;
-          // Puedes devolver más si quieres: const { latitude, longitude } = position.coords;
+
           resolve({ latitude, longitude, time });
         },
         (error) => {
