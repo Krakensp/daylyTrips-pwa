@@ -89,7 +89,7 @@ document.addEventListener("click", (e) => {
 
   if (e.target.matches($REVERSE_BUTTON)) {
     (async () => {
-      let lastTravel = await getLastTravel();
+      let lastTravel = getLastTravel();
       showLoader();
       try {
         const result = await removeTravel();
@@ -116,11 +116,6 @@ document.addEventListener("click", (e) => {
     $containerDiferentTrip.classList.add("inactive");
   }
 
-  document.addEventListener("submit", (e) => {
-    e.preventDefault();
-    handlerTypedCost();
-  });
-
   // ************ HISTORY MENU********************
   if (e.target.matches($HISTORY_BUTTON)) {
     let today = new Date();
@@ -137,6 +132,19 @@ document.addEventListener("click", (e) => {
   }
   if (e.target.matches($FORWARD_HISTORY_BTN)) {
     displayHistory(nextDayHistory());
+  }
+});
+
+document.addEventListener("submit", async (e) => {
+  showLoader();
+  try {
+    e.preventDefault();
+    e.stopPropagation();
+    await handlerTypedCost();
+  } catch (error) {
+    console.error("Error al procesar el costo tipeado:", error);
+  } finally {
+    hideLoader();
   }
 });
 

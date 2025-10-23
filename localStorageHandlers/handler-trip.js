@@ -11,7 +11,7 @@ class Travel {
 
 const STORAGE_KEY = "travels";
 
-const getTravels = async () => {
+const getTravels = () => {
   const data = localStorage.getItem("travels");
   return data ? JSON.parse(data) : [];
 };
@@ -33,7 +33,7 @@ const createTravels = async () => {
 
 const addTravel = async (cost) => {
   try {
-    const travels = await getTravels();
+    const travels = getTravels();
     const { latitude, longitude, time } = await getLocation();
 
     const travelData = new Travel(latitude, longitude, time, cost);
@@ -47,15 +47,15 @@ const addTravel = async (cost) => {
   }
 };
 
-const getLastTravel = async () => {
-  const travels = await getTravels();
+const getLastTravel = () => {
+  const travels = getTravels();
   const lastTravel = travels.length - 1;
   return travels[lastTravel];
 };
 
 const removeTravel = async () => {
   try {
-    const travels = await getTravels();
+    const travels = getTravels();
 
     travels.pop();
     await saveTravels(travels);

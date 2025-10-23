@@ -2,7 +2,7 @@ import frontEndCharge from "../frontEnd/front_end_charge.js";
 import { addTravel } from "../localStorageHandlers/handler-trip.js";
 import { updateTotalReached } from "../localStorageHandlers/totalReached.js";
 
-const handlerTypedCost = () => {
+const handlerTypedCost = async () => {
   const $TYPED_COST_CONTAINER = "diferent-trip-container";
   let $costoDiferente = document.getElementById("diferent-trip-value");
   let costoDiferente = $costoDiferente.value;
@@ -16,7 +16,7 @@ const handlerTypedCost = () => {
     console.error("el campo esta vacio");
   } else {
     updateTotalReached(costoDiferente);
-    addTravel(costoDiferente);
+    await addTravel(costoDiferente);
     frontEndCharge();
 
     let $containerDiferentTrip = document.getElementById($TYPED_COST_CONTAINER);

@@ -4,7 +4,7 @@ import { getOneDayRegister } from "../localStorageHandlers/handler-history.js";
 import { getTravels } from "../localStorageHandlers/handler-trip.js";
 import { getTotalReached } from "../localStorageHandlers/totalReached.js";
 
-const showTodayHistory = async (date) => {
+const showTodayHistory = (date) => {
   let $dateLabel = document.getElementById("history-date");
   $dateLabel.dataset.date = date;
   let $titleTag = document.getElementById("title");
@@ -22,7 +22,7 @@ const showTodayHistory = async (date) => {
   }
 
   const { goal, totalReached, tripsCompleted, status, earningsByHour } =
-    await getResumeInfo(date);
+    getResumeInfo(date);
 
   if (!earningsByHour) {
     removeHistory();
@@ -60,7 +60,7 @@ const showTodayHistory = async (date) => {
   }
 };
 
-const getResumeInfo = async (date) => {
+const getResumeInfo = (date) => {
   let dayRegister = "";
   let status = ""; //fix status bug
   let travels = "";
@@ -68,7 +68,7 @@ const getResumeInfo = async (date) => {
 
   if (dateComparation(new Date(), date)) {
     dayRegister = getDailyRegister();
-    travels = await getTravels();
+    travels = getTravels();
     status = "process";
     totalReached = getTotalReached();
   } else {
