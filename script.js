@@ -43,6 +43,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   let dailyRegister = getDailyRegister();
 
   if (!validateNewDay(dailyRegister.dateTime)) {
+    console.log(getTotalReached(), getTravels());
     closeDailyRegister(getTotalReached(), getTravels());
     dailyRegister = getDailyRegister();
     updateHistory(dailyRegister);

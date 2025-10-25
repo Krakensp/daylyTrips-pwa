@@ -53,7 +53,7 @@ const closeDailyRegister = (totalReached, travels) => {
   );
 
   dailyRegister.setStatus(1);
-  dailyRegister.setTravels(travels);
+  dailyRegister.setTravels(travels); //si persiste el bug en el que no se guardan los viajes, revisar esta linea
   setDailyRegister(dailyRegister);
 };
 

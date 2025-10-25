@@ -15,9 +15,13 @@ h1 {
   padding: 0;
   padding: 1rem;
   text-align: center;
-  background-color: #07679d;
   color: #f0f9ff;
   font-size: 2.5rem;
+
+  color: #f0f9ff;
+  letter-spacing: 1px;
+
+  text-shadow: -4px 5px 7px rgba(0, 0, 0, 0.68);
 }
 
 body {
@@ -37,6 +41,9 @@ main {
   min-height: 100dvh; /*Remove after debugging*/
   height: 100dvh;
   background-color: #07679d;
+  border-radius: 0px;
+  background: #07679d;
+  box-shadow: inset 11px 11px 5px #065b8a, inset -11px -11px 5px #0873b0;
 }
 
 .main-container {
@@ -82,7 +89,13 @@ main {
 
 .goal-completed {
   background-color: green;
-  color: green;
+  color: transparent;
+  background: #27bd54;
+  box-shadow: inset 25px 25px 15px #1e9342, inset -25px -25px 15px #30e766;
+  border-radius: 3px;
+
+  background: #27bd54;
+  box-shadow: inset 6px 6px 4px #21a147, inset -6px -6px 4px #2dd961;
 }
 
 .total-label {
@@ -92,7 +105,12 @@ main {
   background-color: rgb(39, 189, 84);
   color: rgb(243, 243, 243);
   font-size: 4rem;
-  border: solid 3px #e1f2fd;
+  /*border: solid 3px #e1f2fd; */
+
+  border-radius: 4px;
+  background: #27bd54;
+  box-shadow: inset 11px 11px 5px #21a147, inset -11px -11px 5px #2dd961;
+  text-shadow: -4px 5px 7px rgba(0, 0, 0, 0.68);
 }
 
 .trips-buttons-container {
@@ -111,13 +129,17 @@ main {
   height: 5.5rem;
   width: 5.5rem;
   padding: 0.5rem;
-  border-radius: 50%;
   border: none;
   font-size: 2rem;
   background-color: #0a2f47;
   color: #e1f2fd;
-  border: solid 3px #e1f2fd;
+  /* border: solid 3px #e1f2fd; */
   cursor: pointer;
+  border-radius: 40%;
+
+  background: #0a2f47;
+  box-shadow: inset 25px 25px 15px #082537, inset -25px -25px 15px #0c3957;
+  text-shadow: -4px 5px 7px rgba(0, 0, 0, 0.68);
 }
 
 .trip-button:hover,
@@ -138,15 +160,19 @@ main {
 .close-btn {
   height: 4.5rem;
   width: 4.5rem;
-  border-radius: 20%;
+
   border: none;
   font-size: 2rem;
-  background-color: rgb(143, 51, 23);
   color: #e1f2fd;
-  border: solid 3px #e1f2fd;
+  /* border: solid 3px #e1f2fd; */
   bottom: 1rem;
 
   cursor: pointer;
+  border-radius: 15px;
+
+  background: #8f3317;
+  box-shadow: inset 25px 25px 15px #702812, inset -25px -25px 15px #ae3e1c;
+  text-shadow: -4px 5px 7px rgba(0, 0, 0, 0.68);
 }
 
 .close-btn {
